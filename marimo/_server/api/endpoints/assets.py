@@ -1,7 +1,6 @@
 # Copyright 2026 Marimo. All rights reserved.
 from __future__ import annotations
 
-import mimetypes
 import re
 from pathlib import Path
 from typing import TYPE_CHECKING, TypedDict
@@ -40,6 +39,7 @@ from marimo._templates import (
     notebook_page_template,
 )
 from marimo._utils.async_path import AsyncPath
+from marimo._utils.mime import guess_mime_type
 from marimo._utils.paths import (
     MARIMO_DIR_NAME,
     marimo_package_path,
@@ -564,7 +564,7 @@ def virtual_file(
         )
     total_size = int(byte_length_str)
 
-    mimetype, _ = mimetypes.guess_type(filename)
+    mimetype = guess_mime_type(filename)
     headers = {
         "Cache-Control": "max-age=86400",
         # Advertise range support so Safari (which requires it for media
